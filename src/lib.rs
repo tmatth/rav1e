@@ -336,7 +336,7 @@ fn write_sb_split(cw: &mut ContextWriter, fi: &FrameInvariants, fs: &mut FrameSt
             for p in 0..1 {
                 for by in 0..8 {
                     for bx in 0..8 {
-                        let bo = sbo.block_offset(bx, by);
+                        let bo = sbo.block_offset(bx + (xstep << 3), by + (ystep << 3));
                         cw.bc.at(&bo).mode = mode;
                         write_b(cw, fi, fs, p, &bo, mode, tx_type);
                     }
@@ -346,7 +346,7 @@ fn write_sb_split(cw: &mut ContextWriter, fi: &FrameInvariants, fs: &mut FrameSt
             for p in 1..3 {
                 for by in 0..4 {
                     for bx in 0..4 {
-                        let bo = sbo.block_offset(bx, by);
+                        let bo = sbo.block_offset(bx + (xstep << 2), by + (ystep << 2));
                         write_b(cw, fi, fs, p, &bo, uv_mode, uv_tx_type);
                     }
                 }
