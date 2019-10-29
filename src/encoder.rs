@@ -908,9 +908,9 @@ impl<T: Pixel> FrameInvariants<T> {
         0,
         3,
       );
-      self.cdef_y_strengths[0] =
+      self.cdef_y_strengths[1] =
         (predicted_y_f1 * CDEF_SEC_STRENGTHS as i32 + predicted_y_f2) as u8;
-      self.cdef_uv_strengths[0] =
+      self.cdef_uv_strengths[1] =
         (predicted_uv_f1 * CDEF_SEC_STRENGTHS as i32 + predicted_uv_f2) as u8;
     } else {
       let predicted_y_f1 = clamp(
@@ -937,9 +937,9 @@ impl<T: Pixel> FrameInvariants<T> {
         0,
         3,
       );
-      self.cdef_y_strengths[0] =
+      self.cdef_y_strengths[1] =
         (predicted_y_f1 * CDEF_SEC_STRENGTHS as i32 + predicted_y_f2) as u8;
-      self.cdef_uv_strengths[0] =
+      self.cdef_uv_strengths[1] =
         (predicted_uv_f1 * CDEF_SEC_STRENGTHS as i32 + predicted_uv_f2) as u8;
     }
   }
