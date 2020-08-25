@@ -1977,7 +1977,7 @@ fn rdo_loop_plane_error<T: Pixel>(
   for by in 0..sb_h_blocks {
     for bx in 0..sb_w_blocks {
       let loop_bo = offset_sbo.block_offset(bx << 1, by << 1);
-      if loop_bo.0.x < blocks.cols() && loop_bo.0.y < blocks.rows() {
+      if loop_bo.0.x < blocks.cols() && loop_bo.0.y < blocks.rows() && !blocks[loop_bo].skip {
         let src_plane = &src.planes[pli];
         let test_plane = &test.planes[pli];
         let PlaneConfig { xdec, ydec, .. } = *src_plane.plane_cfg;
