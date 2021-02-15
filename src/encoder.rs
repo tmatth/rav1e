@@ -692,29 +692,11 @@ impl<T: Pixel> FrameInvariants<T> {
       is_motion_mode_switchable: false, // 0: only the SIMPLE motion mode will be used.
       disable_frame_end_update_cdf: sequence.reduced_still_picture_hdr,
       allow_warped_motion: false,
-      cdef_search_method: CDEFSearchMethod::PickFromQ,
+      cdef_search_method: CDEFSearchMethod::FullSearch,
       cdef_damping: 3,
       cdef_bits: 0,
-      cdef_y_strengths: [
-        0 * 4 + 0,
-        1 * 4 + 0,
-        2 * 4 + 1,
-        3 * 4 + 1,
-        5 * 4 + 2,
-        7 * 4 + 3,
-        10 * 4 + 3,
-        13 * 4 + 3,
-      ],
-      cdef_uv_strengths: [
-        0 * 4 + 0,
-        1 * 4 + 0,
-        2 * 4 + 1,
-        3 * 4 + 1,
-        5 * 4 + 2,
-        7 * 4 + 3,
-        10 * 4 + 3,
-        13 * 4 + 3,
-      ],
+      cdef_y_strengths: [ 0, 1, 2, 3, 5, 7, 10, 13 ],
+      cdef_uv_strengths: [ 0, 1, 2, 3, 5, 7, 10, 13 ],
       delta_q_present: false,
       ref_frames: [0; INTER_REFS_PER_FRAME],
       ref_frame_sign_bias: [false; INTER_REFS_PER_FRAME],
@@ -969,7 +951,11 @@ impl<T: Pixel> FrameInvariants<T> {
 
     match self.cdef_search_method {
       CDEFSearchMethod::PickFromQ => {
+        self.cdef_bits = 0;
         self.pick_strength_from_q(qps);
+      }
+      CDEFSearchMethod::FullSearch => {
+        self.cdef_bits = 3;
       }
       // TODO: implement FastSearch and FullSearch
       _ => unreachable!(),
